@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    public float rotationSpeed = 120f;
-    public float floatAmplitude = 0.15f; 
+    public float rotationSpeed = 90f;
+    public float floatAmplitude = 0.1f; 
     public float floatFrequency = 2f;   
 
     private Vector3 startPos;
