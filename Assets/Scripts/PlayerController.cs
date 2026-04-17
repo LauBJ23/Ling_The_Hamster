@@ -7,20 +7,33 @@ public class PlayerController : MonoBehaviour
     public bool hasKey = false;
     public bool hasWater = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 direction = new Vector3(moveHorizontal, moveVertical, 0);
-        transform.Translate(direction * speed * Time.deltaTime);
+        Vector3 direction = new Vector3(moveHorizontal, moveVertical, 0).normalized;
+        
+        
+        transform.Translate(direction * speed * Time.deltaTime, Space.World);
+
+       
+        if (direction != Vector3.zero)
+        {
+            if (moveHorizontal > 0) // Derecha
+                transform.rotation = Quaternion.Euler(0, 0, 270);
+            else if (moveHorizontal < 0) // Izquierda
+                transform.rotation = Quaternion.Euler(0, 0, 90);
+            else if (moveVertical > 0) // Arriba
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            else if (moveVertical < 0) // Abajo
+                transform.rotation = Quaternion.Euler(0, 0, 180);
+        }
     }
 
     //este método especial de unity se ejecuta cuando interactuamos con un objeto en modo Trigger
@@ -57,5 +70,4 @@ public class PlayerController : MonoBehaviour
              Debug.Log("Keep trying, you need 3 and the KEY to win");
         }*/
     }
-
 }
