@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public float distance = 20f;
-    public float speed = 5f;
+    public float distance =3f;
+    public float speed = 1.5f;
     private Vector3 startPos;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
