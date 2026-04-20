@@ -1,15 +1,27 @@
 using UnityEngine;
+using TMPro;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
-    public int score = 0;
+    public int seed = 0;
+    public int totalWorms = 5;
+    public int bananas = 0;
+    public int totalBananas = 1;
     public bool hasBanana = false;
     public bool hasCat = false;
+    public TextMeshProUGUI textSeed;
+    public TextMeshProUGUI textBanana;
+    public TextMeshProUGUI textWorms;
+    public TextMeshProUGUI notificationText;
+
 
     void Start()
     {
-       
+       UpdateTextScore();
+       notificationText.gameObject.SetActive(false);
+
     }
 
     void Update()
@@ -33,44 +45,68 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, 0, 0);
             else if (moveVertical < 0) // Abajo
                 transform.rotation = Quaternion.Euler(0, 0, 180);
-            else if (moveHorizontal > 0 && moveVertical > 0) 
-                transform.rotation = Quaternion.Euler(0, 0, 45);
-            else if (moveHorizontal < 0 && moveVertical == 0) 
-                transform.rotation = Quaternion.Euler(0, 0, 135);
-            else if (moveVertical > 0 && moveHorizontal == 0) 
-                transform.rotation = Quaternion.Euler(0, 0, -45);
-            else if (moveVertical < 0 && moveHorizontal == 0) 
-                transform.rotation = Quaternion.Euler(0, 0, -135);
         }
     }
 
-    //este método especial de unity se ejecuta cuando interactuamos con un objeto en modo Trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Collectable"))
         {
-            score = score + 1;//le sumo 1 a la variable score
+            seed = seed + 1;
+            UpdateTextScore();
+
+            Destroy(other.gameObject);
+            ShowNotification("Collected!");
+            Debug.Log("Seeds: " + seed);
+        }
+        if (other.CompareTag("Collectable1"))
+        {
+            worm = worm + 1;
+            UpdateTextScore();
+
             Destroy(other.gameObject);
             Debug.Log("Collected!");
             Debug.Log("Score: " + score);
+            ShowNotification("Collected!");
+            Debug.Log("Worms: " + worm);
         }
 
         if (other.CompareTag("Banana"))
         {
             hasBanana = true;
-            Debug.Log("BANANA Collected!");
+            ShowNotification("You've collected the banana!");
             Destroy(other.gameObject);
         }
 
         if (other.CompareTag("Cat"))
         {
             hasCat = true;
-            Debug.Log("Has tocado el gato, comunicate con el servicio tecnico de Samsung, Oh!");
+            ShowNotification("The cat got you!!");
+            Destroy(gameObject);
         }
 
-        if (score >= 3 && hasBanana == true && !hasCat)
+        if (seed == 10 && worm==5  && hasBanana == true && !hasCat)
         {
-            Debug.Log("You Won!");
+            Debug.Log("You made it! You ate all the treats and skipped the cat!");
+        }
+    }
+     void UpdateTextScore()
+    {
+        textSeed.text = "Seeds: " + seed + "/" + totalSeeds;
+        textBanana.text = "Bananas: " + bananas + "/" + totalBananas;
+        textWorms.text = "Worms: " + worm + "/" + totalWorms;
+    }
+
+    void ShowNotification(string message)
+    {
+        StartCoroutine(ShowMessageRoutine(message));
+        IEnumerator ShowMessageRoutine(string message)
+        {
+            notificationText.text = message;
+            notificationText.gameObject.SetActive(true);
+
+            yield return new WaitForSeconds(2f); 
+            notificationText.gameObject.SetActive(false);
         }
     }
 }
