@@ -4,8 +4,9 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed = 4f;
     public int seed = 0;
+    public int worm = 0;
     public int totalWorms = 5;
     public int bananas = 0;
     public int totalBananas = 1;
@@ -65,7 +66,6 @@ public class PlayerController : MonoBehaviour
             UpdateTextScore();
 
             Destroy(other.gameObject);
-            Debug.Log("Collected!");
             Debug.Log("Score: " + score);
             ShowNotification("Collected!");
             Debug.Log("Worms: " + worm);
@@ -81,13 +81,11 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Cat"))
         {
             hasCat = true;
-            ShowNotification("The cat got you!!");
             Destroy(gameObject);
         }
 
         if (seed == 10 && worm==5  && hasBanana == true && !hasCat)
         {
-            Debug.Log("You made it! You ate all the treats and skipped the cat!");
         }
     }
      void UpdateTextScore()
