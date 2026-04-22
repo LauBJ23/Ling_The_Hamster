@@ -4,9 +4,9 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 4f;
+    public float speed = 5f;
     public int seed = 0;
-    public int totalSeeds = 15;
+    public int totalSeeds = 10;
     public int worm = 0;
     public int totalWorms = 5;
     public int bananas = 0;
