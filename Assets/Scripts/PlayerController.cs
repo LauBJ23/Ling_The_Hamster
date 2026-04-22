@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 4f;
     public int seed = 0;
+    public int totalSeeds = 15;
     public int worm = 0;
     public int totalWorms = 5;
     public int bananas = 0;
@@ -66,7 +67,6 @@ public class PlayerController : MonoBehaviour
             UpdateTextScore();
 
             Destroy(other.gameObject);
-            Debug.Log("Score: " + score);
             ShowNotification("Collected!");
             Debug.Log("Worms: " + worm);
         }
@@ -74,7 +74,6 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Banana"))
         {
             hasBanana = true;
-            ShowNotification("You've collected the banana!");
             Destroy(other.gameObject);
         }
 
@@ -83,10 +82,7 @@ public class PlayerController : MonoBehaviour
             hasCat = true;
             Destroy(gameObject);
         }
-
-        if (seed == 10 && worm==5  && hasBanana == true && !hasCat)
-        {
-        }
+        
     }
      void UpdateTextScore()
     {
